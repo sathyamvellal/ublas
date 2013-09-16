@@ -68,6 +68,18 @@ namespace boost { namespace numeric { namespace ublas {
             data_ (size) {
         }
 
+        BOOST_UBLAS_INLINE
+        vector (size_type size, std::function<void (std::function<void (size_type, value_type)>)> initializer):
+            vector_container<self_type> (),
+            data_ (size, initializer) {
+        }
+
+        BOOST_UBLAS_INLINE
+        vector (size_type size, std::function<void (pointer)> initializer):
+            vector_container<self_type> (),
+            data_ (size, initializer) {
+        }
+
     /// \brief Constructor of a vector by copying from another container
     /// This type has the generic name \c array_typ within the vector definition.
     /// \param size initial size of the vector \bug this value is not used

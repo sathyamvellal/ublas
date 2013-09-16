@@ -74,6 +74,24 @@ namespace boost { namespace numeric { namespace ublas {
           else
               data_ = 0;
         }
+        BOOST_UBLAS_INLINE
+        unbounded_array(size_type size, std::function<void (std::function<void (size_type, value_type)>)> initializer, const ALLOC &a = ALLOC()):
+        // unbounded_array(size_type size, std::function<void ()> initializer, const ALLOC &a = ALLOC()):
+            alloc_ (a), size_ (size) {
+            data_ = alloc_.allocate (size_);
+
+            initializer ([this](size_type i, value_type o) {
+                alloc_.construct(data_ + i, o);
+            });
+        }
+
+        BOOST_UBLAS_INLINE
+        unbounded_array(size_type size, std::function<void (pointer)> initializer, const ALLOC &a = ALLOC()):
+        // unbounded_array(size_type size, std::function<void ()> initializer, const ALLOC &a = ALLOC()):
+            alloc_ (a), size_ (size) {
+            data_ = alloc_.allocate (size_);
+            initializer (data_);
+        }
         // No value initialised, but still be default constructed
         BOOST_UBLAS_INLINE
         unbounded_array (size_type size, const value_type &init, const ALLOC &a = ALLOC()):
