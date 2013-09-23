@@ -135,6 +135,13 @@ namespace boost { namespace numeric {
             size1_ (size1), size2_ (size2), data_ (layout_type::storage_size (size1, size2), init) {
         }
 
+		BOOST_UBLAS_INLINE
+		matrix (size_type size1, size_type size2, std::function<void (pointer)> initializer):
+			matrix_container<self_type> (),
+			size1_ (size1), size2_ (size2),
+			data_ (layout_type::storage_size (size1, size2), initializer) {
+		}
+
       /** Dense matrix constructor with defined size and an initial data array
        * \param size1 number of rows
        * \param size2 number of columns
